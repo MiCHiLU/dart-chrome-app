@@ -17,8 +17,7 @@
 
 
 RELEASE_DIR=release
-RELEASE_IOS=$(RELEASE_DIR)/ios
-all: chrome-apps $(RELEASE_IOS)
+all: chrome-apps
 
 
 ENDPOINTS_LIB=submodule/dart_echo_v1_api_client
@@ -81,7 +80,6 @@ RELEASE_RESOURCE=\
 	web/packages/web_components/platform.js\
 
 RELEASE_CHROME_APPS_RESOURCE=$(RELEASE_RESOURCE) web/main.dart
-RELEASE_CORDOVA_RESOURCE=$(RELEASE_RESOURCE)
 
 RELEASE_CHROME_APPS=$(RELEASE_DIR)/chrome-apps
 RELEASE_RESOURCE_DIR=
@@ -146,84 +144,14 @@ $(RELEASE_CHROME_APPS_RESOURCE_DIR): $(foreach path,$(RELEASE_RESOURCE_DIR),$(ad
 	rm -f $(foreach path,$(shell find release/chrome-apps -type f -name *.min.js),$(subst .min.js,.js,$(path)))
 
 
-ios: $(RELEASE_IOS)
-	cd $<; cca run ios
-
-ios-sim: $(RELEASE_IOS)
-	cd $<; cca emulate ios
-
-
 RESOURCE_SUFFIX_FOR_BUILD = html css json js
 RESOURCE_DIR_FOR_BUILD = web web/js web/view web/packages/cca_base/component web/packages/cca_base/routing web/packages/cca_base/service
 RESOURCE_FOR_BUILD = $(foreach suffix,$(RESOURCE_SUFFIX_FOR_BUILD),$(foreach dir,$(RESOURCE_DIR_FOR_BUILD),$(wildcard $(dir)/*.$(suffix))))
 BUILD_RESOURCE = $(addprefix build/,$(RESOURCE_FOR_BUILD))
-RELEASE_CORDOVA=$(RELEASE_DIR)/cordova
-RELEASE_CORDOVA_RESOURCE_DIR=$(foreach path,$(RELEASE_RESOURCE_DIR),$(addprefix $(RELEASE_CORDOVA)/,$(path)))
-RELEASE_CORDOVA_RESOURCE_SRC=$(addprefix $(BUILD_DIR)/,$(RELEASE_RESOURCE))
-RELEASE_CORDOVA_RESOURCE_DST=$(foreach path,$(RELEASE_CORDOVA_RESOURCE_SRC),$(subst $(RELEASE_RESOURCE_SRC_DIR),$(RELEASE_CORDOVA),$(path)))
-CORDOVA_PLUGINS_TXT=cordova-plugins.txt
-CORDOVA_PLUGINS=$(foreach plugin,$(shell cat $(CORDOVA_PLUGINS_TXT)),$(subst submodule/,../../submodule/,$(plugin)))
-$(RELEASE_IOS): $(VERSION) $(ENDPOINTS_LIB) $(RESOURCE) $(BUILD_RESOURCE) $(RELEASE_CORDOVA) $(DART_JS) $(RELEASE_CORDOVA_RESOURCE_DST) $(CORDOVA_PLUGINS_TXT)
-	@if [ "$(strip $(RELEASE_CORDOVA_RESOURCE_DIR))" != "" ]; then\
-		make $(RELEASE_CORDOVA_RESOURCE_DIR);\
-	fi;
-	@if [ $(DART_JS) -nt $(RELEASE_CORDOVA)/main.dart.precompiled.js ]; then\
-		echo "cp $(DART_JS) $(RELEASE_CORDOVA)/main.dart.precompiled.js";\
-		cp $(DART_JS) $(RELEASE_CORDOVA)/main.dart.precompiled.js;\
-	fi;
-	$(foreach path,$(shell find $(RELEASE_RESOURCE_SRC_DIR) -name "*.html.*.js"),$(shell\
-		if [ $(path) -nt $(subst $(RELEASE_RESOURCE_SRC_DIR),$(RELEASE_CORDOVA),$(path)) ]; then\
-			cp $(path) $(subst $(RELEASE_RESOURCE_SRC_DIR),$(RELEASE_CORDOVA),$(path));\
-		fi;\
-	))
-	$(foreach path,$(shell find $(RELEASE_RESOURCE_SRC_DIR) -name "*.html_bootstrap.dart.precompiled.js"),$(shell\
-		if [ $(path) -nt $(subst .precompiled.js,.js,$(subst $(RELEASE_RESOURCE_SRC_DIR),$(RELEASE_CORDOVA),$(path))) ]; then\
-			cp $(path) $(subst .precompiled.js,.js,$(subst $(RELEASE_RESOURCE_SRC_DIR),$(RELEASE_CORDOVA),$(path)));\
-		fi;\
-	))
-	@if ! (cd $@ && cca prepare); then\
-		echo "rm -rf $@";\
-		rm -rf $@;\
-		echo "cca create $@ --link-to=$(RELEASE_CORDOVA)/manifest.json";\
-		cca create $@ --link-to=$(RELEASE_CORDOVA)/manifest.json;\
-		echo "git checkout release/ios/config.xml";\
-		git checkout release/ios/config.xml;\
-		cd $@;\
-		for plugin in $(CORDOVA_PLUGINS); do\
-			echo "cca plugin add $$plugin";\
-			cca plugin add $$plugin;\
-		done;\
-	else\
-		cd $@;\
-		for plugin in $(CORDOVA_PLUGINS); do\
-			echo "cca plugin add $$plugin";\
-			cca plugin add $$plugin;\
-		done;\
-		cca prepare;\
-	fi;
 
 build/%: %
 	@mkdir -p $(dir $@)
 	cp $< $@
-
-$(RELEASE_CORDOVA): $(RELEASE_DIR)
-	mkdir -p $@
-
-$(RELEASE_CORDOVA_RESOURCE_DST): $(RELEASE_CORDOVA_RESOURCE_SRC) $(DART_JS)
-	@if [ ! -d $(dir $@) ]; then\
-		mkdir -p $(dir $@);\
-	fi;
-	@if [ $(subst $(RELEASE_CORDOVA),$(RELEASE_RESOURCE_SRC_DIR),$@) -nt $@ ]; then\
-		cp $(subst $(RELEASE_CORDOVA),$(RELEASE_RESOURCE_SRC_DIR),$@) $@;\
-	fi;
-
-$(RELEASE_CORDOVA_RESOURCE_DIR): $(foreach path,$(RELEASE_RESOURCE_DIR),$(addprefix $(RELEASE_RESOURCE_SRC_DIR)/,$(path)))
-	cp -r $(subst $(RELEASE_CORDOVA),$(RELEASE_RESOURCE_SRC_DIR),$@) $@
-
-
-PROJECT=DartCCA
-xcode: $(RELEASE_IOS)
-	open $</platforms/ios/$(PROJECT).xcodeproj
 
 
 clean:
@@ -239,4 +167,4 @@ clean-all: clean
 	find . -name packages -type l -delete
 	find . -type d -name .sass-cache |xargs rm -rf
 
-.PHONY: $(VERSION) $(RELEASE_IOS)
+.PHONY: $(VERSION)
