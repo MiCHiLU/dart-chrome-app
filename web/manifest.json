@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+  "name": "dart-chrome-app",
+  "short_name": "dart-chrome-app",
+  "description": "Description for dart-chrome-app",
+
+  "version": "0.0.1.0",
+
+  "icons": {
+    "16": "icon_16.png",
+    "128": "icon_128.png"
+  },
+
+  "app": {
+    "background": {
+      "scripts": ["background.js"]
+    }
+  }
+}
