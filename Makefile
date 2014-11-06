@@ -60,6 +60,19 @@ DART_JS=web/main.dart.js
 chrome-apps: $(VERSION) $(ENDPOINTS_LIB) $(RESOURCE)
 
 
+scaffold:
+	@read -p "your project name([a-z0-9-]): " name &&\
+	if [ "$$name" == "" ] ; then\
+		echo no given.;\
+		exit;\
+	fi;\
+	sed -i "" s/dart-chrome-app/$$name/g\
+		pubspec.yaml\
+		web/index.html\
+		web/manifest.json\
+	;
+
+
 clean:
 	rm -f $(VERSION) $(RESOURCE)
 
