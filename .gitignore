@@ -1,0 +1,13 @@
+lib/version
+packages
+pubspec.lock
+submodule/dart_echo_v1_api_client
+tags
+
+syntax: glob
+
+*.js
+*.sw?
+*~
+
+syntax: regexp
