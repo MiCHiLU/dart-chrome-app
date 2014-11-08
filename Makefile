@@ -76,8 +76,8 @@ RELEASE_RESOURCE=\
 	$(JSON)\
 	$(shell find web -name "*.png")\
 	web/js/browser_dart_csp_safe.js\
-	web/js/main.js\
 	web/packages/browser/dart.js\
+	web/main.dart.js\
 	web/packages/chrome/bootstrap.js\
 	web/packages/polymer/src/js/polymer/polymer.js\
 	web/packages/web_components/dart_support.js\
