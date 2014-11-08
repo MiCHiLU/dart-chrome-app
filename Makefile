@@ -75,13 +75,8 @@ RELEASE_RESOURCE=\
 	$(foreach path,$(HTML) $(VERSION),$(subst lib,web/packages/dart-chrome-app,$(path)))\
 	$(JSON)\
 	$(shell find web -name "*.png")\
-	web/js/browser_dart_csp_safe.js\
-	web/packages/browser/dart.js\
 	web/main.dart.js\
 	web/packages/chrome/bootstrap.js\
-	web/packages/polymer/src/js/polymer/polymer.js\
-	web/packages/web_components/dart_support.js\
-	web/packages/web_components/platform.js\
 
 RELEASE_CHROME_APPS_RESOURCE=$(RELEASE_RESOURCE) web/main.dart
 
