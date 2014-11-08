@@ -74,7 +74,7 @@ js-serve: $(VERSION) $(ENDPOINTS_LIB) $(RESOURCE)
 RELEASE_RESOURCE=\
 	$(foreach path,$(HTML) $(VERSION),$(subst lib,web/packages/cca_base,$(path)))\
 	$(JSON)\
-	$(shell find web/icons -name "*.png")\
+	$(shell find web -name "*.png")\
 	web/js/browser_dart_csp_safe.js\
 	web/js/main.js\
 	web/packages/browser/dart.js\
