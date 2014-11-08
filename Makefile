@@ -72,7 +72,7 @@ js-serve: $(VERSION) $(ENDPOINTS_LIB) $(RESOURCE)
 
 
 RELEASE_RESOURCE=\
-	$(foreach path,$(HTML) $(VERSION),$(subst lib,web/packages/cca_base,$(path)))\
+	$(foreach path,$(HTML) $(VERSION),$(subst lib,web/packages/dart-chrome-app,$(path)))\
 	$(JSON)\
 	$(shell find web -name "*.png")\
 	web/js/browser_dart_csp_safe.js\
@@ -149,7 +149,7 @@ $(RELEASE_CHROME_APPS_RESOURCE_DIR): $(foreach path,$(RELEASE_RESOURCE_DIR),$(ad
 
 
 RESOURCE_SUFFIX_FOR_BUILD = html css json js
-RESOURCE_DIR_FOR_BUILD = web web/js web/view web/packages/cca_base/component web/packages/cca_base/routing web/packages/cca_base/service
+RESOURCE_DIR_FOR_BUILD = web web/js web/view web/packages/dart-chrome-app/component web/packages/dart-chrome-app/routing web/packages/dart-chrome-app/service
 RESOURCE_FOR_BUILD = $(foreach suffix,$(RESOURCE_SUFFIX_FOR_BUILD),$(foreach dir,$(RESOURCE_DIR_FOR_BUILD),$(wildcard $(dir)/*.$(suffix))))
 BUILD_RESOURCE = $(addprefix build/,$(RESOURCE_FOR_BUILD))
 
