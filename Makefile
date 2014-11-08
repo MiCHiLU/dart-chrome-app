@@ -47,11 +47,14 @@ $(ENDPOINTS_LIB):
 	cd submodule/discovery_api_dart_client_generator; pub install
 	submodule/discovery_api_dart_client_generator/bin/generate.dart --no-prefix -i $(DISCOVERY) -o submodule
 
+lib:
+	mkdir -p lib
+
 VERSION_STRING=$(shell git describe --always --dirty=+)
-PROJECT_SINCE=1400976000 #2014/05/25
+PROJECT_SINCE=1415232000 #2014/11/06
 AUTO_COUNT_SINCE=$(shell echo $$(((`date -u +%s`-$(PROJECT_SINCE))/(24*60*60))))
 AUTO_COUNT_LOG=$(shell git log --since=midnight --oneline|wc -l|tr -d " ")
-$(VERSION): web/manifest.json
+$(VERSION): lib web/manifest.json
 	@if [ "$(VERSION_STRING)" != "$(strip $(shell [ -f $@ ] && cat $@))" ] ; then\
 		echo 'echo $(VERSION_STRING) > $@' ;\
 		echo $(VERSION_STRING) > $@ ;\
