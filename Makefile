@@ -75,7 +75,6 @@ RELEASE_RESOURCE=\
 	$(foreach path,$(HTML) $(VERSION),$(subst lib,web/packages/cca_base,$(path)))\
 	$(JSON)\
 	$(shell find web/icons -name "*.png")\
-	$(shell find web/example -name "*.html")\
 	web/js/browser_dart_csp_safe.js\
 	web/js/main.js\
 	web/packages/browser/dart.js\
