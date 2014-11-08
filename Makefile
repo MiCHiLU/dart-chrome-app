@@ -44,8 +44,10 @@ pubserve-force-poll: $(VERSION) $(ENDPOINTS_LIB) $(RESOURCE)
 
 DISCOVERY=assets/echo-v1.discovery
 $(ENDPOINTS_LIB):
-	cd submodule/discovery_api_dart_client_generator; pub install
-	submodule/discovery_api_dart_client_generator/bin/generate.dart --no-prefix -i $(DISCOVERY) -o submodule
+	@if [ -d submodule/discovery_api_dart_client_generator ]; then\
+		(cd submodule/discovery_api_dart_client_generator && pub install);\
+		submodule/discovery_api_dart_client_generator/bin/generate.dart --no-prefix -i $(DISCOVERY) -o submodule;\
+	fi;
 
 lib:
 	mkdir -p lib
