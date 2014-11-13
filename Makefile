@@ -32,6 +32,11 @@ JSON=$(YAML:.yaml=.json)
 RESOURCE=$(HTML) $(CSS) $(MINCSS) $(JSON)
 VERSION=lib/version
 
+pubserve: $(VERSION) $(ENDPOINTS_LIB) $(RESOURCE)
+	pub serve --port 8080 --no-dart2js
+
+pubserve-force-poll: $(VERSION) $(ENDPOINTS_LIB) $(RESOURCE)
+	pub serve --port 8080 --no-dart2js --force-poll
 
 DISCOVERY=assets/echo-v1.discovery
 $(ENDPOINTS_LIB):
