@@ -1,4 +1,5 @@
 /build
+/cache
 /lib/version
 /pubspec.lock
 /submodule/dart_echo_v1_api_client
