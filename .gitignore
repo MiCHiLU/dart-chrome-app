@@ -1,8 +1,8 @@
-build
-lib/version
+/build
+/lib/version
+/pubspec.lock
+/submodule/dart_echo_v1_api_client
 packages
-pubspec.lock
-submodule/dart_echo_v1_api_client
 tags
 
 syntax: glob
