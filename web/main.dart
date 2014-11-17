@@ -9,12 +9,15 @@
 import 'dart:html';
 
 import 'package:chrome/chrome_app.dart' as chrome;
+import 'package:polymer/polymer.dart' as polymer;
 
 int boundsChange = 100;
 int count = 0;
 
 void main() {
-  querySelector('#text_id').onClick.listen(resizeWindow);
+  polymer.initPolymer().run(() {
+    querySelector('#text_id').onClick.listen(resizeWindow);
+  });
 }
 
 void resizeWindow(MouseEvent event) {
