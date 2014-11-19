@@ -3,10 +3,11 @@ description: A sample Dart Chrome packaged application
 dependencies:
   chrome: any
   polymer: '>=0.15.1 <0.16.0'
-dev_dependencies:
-  archive: '>=1.0.16 <1.1.0'
+dependency_overrides:
   chrome_testing:
     path: chrome-app-testing.dart
+dev_dependencies:
+  archive: '>=1.0.16 <1.1.0'
   grinder: '>=0.6.0 <0.7.0'
   intl: any
 transformers:
