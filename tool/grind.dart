@@ -14,7 +14,7 @@ import 'package:polymer/builder.dart' as polymer;
 
 import 'webstore_client.dart';
 
-const String MAIN_REPOSITORY_URL = 'git://github.com/dart-lang/spark.git';
+const String MAIN_REPOSITORY_URL = 'git://github.com/MiCHiLU/dart-chrome-app.git';
 
 final NumberFormat _NF = new NumberFormat.decimalPattern();
 
@@ -23,11 +23,11 @@ final Directory DIST_DIR = new Directory('dist');
 
 // Here's how to generate refreshToken:
 // https://docs.google.com/a/google.com/document/d/1OEM4GGhMrOWS4pYvtIWtkw_17C2pAlWPxUFu-7_YF-4
-final String clientID = Platform.environment['SPARK_UPLOADER_CLIENTID'];
+final String clientID = Platform.environment['CHROMEAPP_UPLOADER_CLIENTID'];
 final String clientSecret =
-    Platform.environment['SPARK_UPLOADER_CLIENTSECRET'];
+    Platform.environment['CHROMEAPP_UPLOADER_CLIENTSECRET'];
 final String refreshToken =
-    Platform.environment['SPARK_UPLOADER_REFRESHTOKEN'];
+    Platform.environment['CHROMEAPP_UPLOADER_REFRESHTOKEN'];
 final String buildBranchName = Platform.environment['DRONE_BRANCH'];
 
 void main([List<String> args]) {
@@ -78,13 +78,13 @@ void setup(GrinderContext context) {
  * Run Polymer lint on the Polymer entry point.
  */
 void lint(GrinderContext context) {
-  const entryPoint = 'web/spark_polymer.html';
+  const entryPoint = 'web/index.html';
 
   context.log('Running polymer linter on ${entryPoint}...');
   polymer.lint(
       entryPoints: [entryPoint],
       options: polymer.parseOptions([]),
-      currentPackage: 'spark'
+      currentPackage: 'dart-chrome-app'
   );
 
   context.log('');
@@ -126,11 +126,11 @@ void deploy(GrinderContext context) {
 
   Directory deployWeb = joinDir(destDir, ['web']);
 
-  // Compile the main Spark app.
-  _dart2jsCompile(context, deployWeb, 'spark_polymer.html_bootstrap.dart');
+  // Compile the main dart-chrome-app app.
+  _dart2jsCompile(context, deployWeb, 'index.html_bootstrap.dart');
 
-  // Compile the services entry-point.
-  _dart2jsCompile(context, deployWeb, 'services_entry.dart');
+  //// Compile the services entry-point.
+  //_dart2jsCompile(context, deployWeb, 'services_entry.dart');
 
   // Remove map files.
   List files = BUILD_DIR.listSync(recursive: true, followLinks: false);
@@ -145,13 +145,13 @@ void deploy(GrinderContext context) {
 
 Future releaseNightly(GrinderContext context) {
   if (clientID == null) {
-    context.fail("SPARK_UPLOADER_CLIENTID environment variable should be set and contain the client ID.");
+    context.fail("CHROMEAPP_UPLOADER_CLIENTID environment variable should be set and contain the client ID.");
   }
   if (clientSecret == null) {
-    context.fail("SPARK_UPLOADER_CLIENTSECRET environment variable should be set and contain the client secret.");
+    context.fail("CHROMEAPP_UPLOADER_CLIENTSECRET environment variable should be set and contain the client secret.");
   }
   if (refreshToken == null) {
-    context.fail("SPARK_UPLOADER_REFRESHTOKEN environment variable should be set and contain the refresh token.");
+    context.fail("CHROMEAPP_UPLOADER_REFRESHTOKEN environment variable should be set and contain the refresh token.");
   }
 
   File file = new File('tool/release-config.json');
@@ -168,13 +168,13 @@ Future releaseNightly(GrinderContext context) {
 
   if (_getRepositoryUrl() != MAIN_REPOSITORY_URL) {
     // Unexpected situation. Don't try to upload a fork to the web store.
-    context.fail("Spark can't be released from here.");
+    context.fail("dart-chrome-app can't be released from here.");
   }
 
   if (channel == null) {
     // This branch is not part of any channel.
-    context.fail("Spark can't be released from here.");
-    return new Future.error("Spark can't be released from here.");
+    context.fail("dart-chrome-app can't be released from here.");
+    return new Future.error("dart-chrome-app can't be released from here.");
   }
 
   String appID = channelConfig['id'];
@@ -188,7 +188,7 @@ Future releaseNightly(GrinderContext context) {
 
   // Creating an archive of the Chrome App.
   context.log('Creating build ${version}');
-  String filename = 'spark-${version}.zip';
+  String filename = 'dart-chrome-app-${version}.zip';
   archive(context, filename);
   context.log('Created ${filename}');
 
@@ -217,14 +217,14 @@ Future releaseNightly(GrinderContext context) {
 //   folders by the "compile" task
 // - Copy the packages/ directory to build/chrome-app/packages
 // - Remove test
-// - Zip the content of build/chrome-app to dist/spark.zip
+// - Zip the content of build/chrome-app to dist/dart-chrome-app.zip
 void archive(GrinderContext context, [String outputZip]) {
-  final String sparkZip = outputZip == null ? '${DIST_DIR.path}/spark.zip' :
+  final String appZip = outputZip == null ? '${DIST_DIR.path}/dart-chrome-app.zip' :
                                               '${DIST_DIR.path}/${outputZip}';
-  _delete(sparkZip);
+  _delete(appZip);
   _removeSymlinks(joinDir(BUILD_DIR, ['web']), ignoreTop : true);
-  _zip(context, 'build/web', sparkZip);
-  _printSize(context, getFile(sparkZip));
+  _zip(context, 'build/web', appZip);
+  _printSize(context, getFile(appZip));
 }
 
 void stats(GrinderContext context) {
@@ -404,7 +404,7 @@ String _getCurrentRevision() {
 void _archiveWithRevision(GrinderContext context) {
   context.log('Performing archive instead.');
   String version = _getCurrentRevision();
-  String filename = 'spark-rev-${version}.zip';
+  String filename = 'dart-chrome-app-rev-${version}.zip';
   archive(context, filename);
   context.log("Created ${filename}");
 }
@@ -428,7 +428,7 @@ String _modifyManifestWithDroneIOBuildNumber(GrinderContext context,
 
   String version = '${majorVersion}.${buildVersion}';
   manifestDict['version'] = version;
-  manifestDict['x-spark-revision'] = revision;
+  manifestDict['x-dart-chrome-app-revision'] = revision;
   manifestDict.remove('key');
   Map oauth2Config = manifestDict['oauth2'];
   String clientID = channelConfig['oauth2-clientid'];

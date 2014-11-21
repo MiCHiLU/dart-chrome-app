@@ -1,22 +1,22 @@
 {
   "nightly": {
-    "name": "Spark (nightly)",
+    "name": "dart-chrome-app (nightly)",
     "branch": "master",
     "version": "0.18",
     "id": "kcjgcakhgelcejampmijgkjkadfcncjl",
-    "description": "Chrome Dev Editor is a developer tool for building apps on the Chrome platform - nightly version",
+    "description": "dart-chrome-app - nightly version",
     "oauth2-clientid": "450494089748-gp35cruaj31fchdh2423raf015luc82u.apps.googleusercontent.com"
   },
   "dev": {
-    "name": "Spark (dev)",
+    "name": "dart-chrome-app (dev)",
     "branch": "0.18",
     "version": "0.18",
     "id": "hpenkfongmodpaiknffeeeohcoilclii",
-    "description": "Chrome Dev Editor is a developer tool for building apps on the Chrome platform - dev version",
+    "description": "dart-chrome-app - dev version",
     "oauth2-clientid": "450494089748-v53iih45odoooegmomoij2do6eeok65m.apps.googleusercontent.com"
   },
   "stable": {
-    "name": "Chrome Dev Editor (developer preview)",
+    "name": "dart-chrome-app (developer preview)",
     "branch": "0.17",
     "version": "0.17",
     "id": "pnoffddplpippgcfjdhbmhkofpnaalpg",
