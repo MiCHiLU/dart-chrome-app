@@ -2,6 +2,8 @@ name: dart-chrome-app
 description: A sample Dart Chrome packaged application
 dependencies:
   chrome: '>=0.6.1 <0.7.0'
+  paper:
+    path: ../chromedeveditor/paper
   polymer: '>=0.15.1 <0.16.0'
 transformers:
 - polymer:
