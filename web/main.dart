@@ -16,6 +16,12 @@ int count = 0;
 
 void main() {
   polymer.initPolymer().run(() {
+    polymer.Polymer.onReady.then((_) {
+      applicationFactory()
+      //.addModule(new AppModule())
+      .run()
+      ;
+    });
     querySelector('#text_id').onClick.listen(resizeWindow);
   });
 }
