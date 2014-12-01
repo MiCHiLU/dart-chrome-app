@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <title>dart-chrome-app</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
+
+  <!-- Load Polymer -->
+  <script src="packages/web_components/platform.js"></script>
+
 </head>
 
 <body>
@@ -16,7 +21,8 @@
     <p id='text_id'>Click me <span id='count'></span>!</p>
   </div>
 
-  <script src="packages/chrome/bootstrap.js" defer></script>
-  <script src="main.dart" type="application/dart"></script>
+  <!-- Start Spark in a deployed build. -->
+  <script type="application/dart" src="main.dart"></script>
+
 </body>
 </html>
