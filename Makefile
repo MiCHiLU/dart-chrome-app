@@ -19,6 +19,7 @@
 all: chrome-apps
 
 
+AUTO_VERSOINING=yes
 ENDPOINTS_LIB=submodule/dart_echo_v1_api_client
 RESOURCE_DIR_PATH=web lib
 RESOURCE_DIR=$(foreach dir,$(shell find $(RESOURCE_DIR_PATH) -type d),$(dir))
@@ -52,11 +53,15 @@ VERSION_DATE=$(shell git log --max-count=1 --pretty=tformat:%ad --date=short|sed
 VERSION_NUMBER=$(shell git log --oneline --no-merges|wc -l|tr -d " ")
 VERSION_STRING=$(shell git describe --always --dirty=+)
 $(VERSION): lib web/manifest.json
+ifdef AUTO_VERSOINING
 	@if [ "$(VERSION_STRING)" != "$(strip $(shell [ -f $@ ] && cat $@))" ] ; then\
 		echo 'echo $(VERSION_STRING) > $@' ;\
 		echo $(VERSION_STRING) > $@ ;\
 	fi;
 	sed -i "" -E 's/("version"[^"]+)"[^"]*"/\1"$(VERSION_DATE).$(VERSION_NUMBER)"/' web/manifest.json
+else
+	@echo -n
+endif
 
 
 DART_JS=web/main.dart.js
