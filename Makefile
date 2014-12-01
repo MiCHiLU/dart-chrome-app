@@ -48,17 +48,15 @@ $(ENDPOINTS_LIB):
 lib:
 	mkdir -p lib
 
+VERSION_DATE=$(shell git log --max-count=1 --pretty=tformat:%ad --date=short|sed s/-0/-/g|sed s/-/./g)
+VERSION_NUMBER=$(shell git log --oneline --no-merges|wc -l|tr -d " ")
 VERSION_STRING=$(shell git describe --always --dirty=+)
-PROJECT_SINCE=1415232000 #2014/11/06
-AUTO_COUNT_SINCE=$(shell echo $$(((`date -u +%s`-$(PROJECT_SINCE))/(24*60*60))))
-AUTO_COUNT_LOG=$(shell git log --since=midnight --oneline|wc -l|tr -d " ")
 $(VERSION): lib web/manifest.json
 	@if [ "$(VERSION_STRING)" != "$(strip $(shell [ -f $@ ] && cat $@))" ] ; then\
 		echo 'echo $(VERSION_STRING) > $@' ;\
 		echo $(VERSION_STRING) > $@ ;\
 	fi;
-	echo $(AUTO_COUNT_SINCE) days since `date -u -r $(PROJECT_SINCE) +%Y-%m-%d`, $(AUTO_COUNT_LOG) commits from midnight.
-	sed -i "" -e "s/\$${AUTO_COUNT}/$(AUTO_COUNT_SINCE).$(AUTO_COUNT_LOG)/" web/manifest.json
+	sed -i "" -E 's/("version"[^"]+)"[^"]*"/\1"$(VERSION_DATE).$(VERSION_NUMBER)"/' web/manifest.json
 
 
 DART_JS=web/main.dart.js
