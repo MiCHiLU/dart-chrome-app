@@ -17,7 +17,7 @@
   },
   "wercker-deploy": {
     "name": "dart-chrome-app (dev)",
-    "branch": "0.0.1.1",
+    "branch": "wercker-deploy",
     "version": "0.0.1.1",
     "id": "igpiamleninpnffljjnjihmjmmmcakkl",
     "description": "dart-chrome-app - dev version",

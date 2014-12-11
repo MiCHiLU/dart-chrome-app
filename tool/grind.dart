@@ -28,7 +28,7 @@ final String clientSecret =
     Platform.environment['CHROMEAPP_UPLOADER_CLIENTSECRET'];
 final String refreshToken =
     Platform.environment['CHROMEAPP_UPLOADER_REFRESHTOKEN'];
-final String buildBranchName = Platform.environment['DRONE_BRANCH'];
+final String buildBranchName = Platform.environment['WERCKER_GIT_BRANCH'];
 
 void main([List<String> args]) {
   task('setup', setup);
