@@ -166,14 +166,15 @@ Future releaseNightly(GrinderContext context) {
     }
   });
 
-  if (_getRepositoryUrl() != MAIN_REPOSITORY_URL) {
+  String repositoryUrl = _getRepositoryUrl();
+  if (repositoryUrl != MAIN_REPOSITORY_URL) {
     // Unexpected situation. Don't try to upload a fork to the web store.
-    context.fail("dart-chrome-app can't be released from here.");
+    context.fail("dart-chrome-app can't be released from here. ${repositoryUrl}");
   }
 
   if (channel == null) {
     // This branch is not part of any channel.
-    context.fail("dart-chrome-app can't be released from here.");
+    context.fail("dart-chrome-app can't be released from here. Building branch ${buildBranchName}");
     return new Future.error("dart-chrome-app can't be released from here.");
   }
 
