@@ -14,7 +14,7 @@ import 'package:polymer/builder.dart' as polymer;
 
 import 'webstore_client.dart';
 
-const String MAIN_REPOSITORY_URL = 'git://github.com/MiCHiLU/dart-chrome-app.git';
+const String MAIN_REPOSITORY_URL = 'git@github.com:MiCHiLU/dart-chrome-app.git';
 
 final NumberFormat _NF = new NumberFormat.decimalPattern();
 
