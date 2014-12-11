@@ -413,21 +413,16 @@ void _archiveWithRevision(GrinderContext context) {
 String _modifyManifestWithDroneIOBuildNumber(GrinderContext context,
                                              Map<String, String> channelConfig)
 {
-  String buildNumber = Platform.environment['DRONE_BUILD_NUMBER'];
-  String revision = Platform.environment['DRONE_COMMIT'];
-  if (buildNumber == null || revision == null) {
-    context.fail("This build process must be run in a drone.io environment");
-    return null;
-  }
+  String revision = Platform.environment['WERCKER_GIT_COMMIT'];
 
   // Tweaking build version in manifest.
   File file = new File('web/manifest.json');
   String content = file.readAsStringSync();
   var manifestDict = JSON.decode(content);
-  String majorVersion = channelConfig['version'];
-  int buildVersion = int.parse(buildNumber);
 
-  String version = '${majorVersion}.${buildVersion}';
+  DateTime now = new DateTime.now();
+  String majorVersion = (new DateFormat('y.M.d.Hmm')).format(now);
+  String version = '${majorVersion}${now.second ~/ 10}';
   manifestDict['version'] = version;
   manifestDict['x-dart-chrome-app-revision'] = revision;
   manifestDict.remove('key');
