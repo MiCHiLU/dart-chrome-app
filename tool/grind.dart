@@ -426,11 +426,6 @@ String _modifyManifestWithDroneIOBuildNumber(GrinderContext context,
   manifestDict['version'] = version;
   manifestDict['x-dart-chrome-app-revision'] = revision;
   manifestDict.remove('key');
-  Map oauth2Config = manifestDict['oauth2'];
-  String clientID = channelConfig['oauth2-clientid'];
-  if (clientID != null) {
-    oauth2Config['client_id'] = clientID;
-  }
   file.writeAsStringSync(new JsonPrinter().print(manifestDict));
 
   // It needs to be copied to compile result directory.
