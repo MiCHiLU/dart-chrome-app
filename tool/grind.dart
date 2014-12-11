@@ -439,6 +439,9 @@ String _modifyManifestWithDroneIOBuildNumber(GrinderContext context,
 void _modifyLocaleWithChannelConfig(GrinderContext context,
                                     Map<String, String> channelConfig) {
   File file = new File('web/_locales/en/messages.json');
+  if (file.existsSync() == false) {
+    return;
+  }
   String content = file.readAsStringSync();
   var messagesJson = JSON.decode(content);
   if (channelConfig['name'] != null) {
