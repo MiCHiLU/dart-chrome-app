@@ -15,6 +15,14 @@
     "description": "dart-chrome-app - dev version",
     "oauth2-clientid": "450494089748-v53iih45odoooegmomoij2do6eeok65m.apps.googleusercontent.com"
   },
+  "wercker-deploy": {
+    "name": "dart-chrome-app (dev)",
+    "branch": "0.0.1.1",
+    "version": "0.0.1.1",
+    "id": "igpiamleninpnffljjnjihmjmmmcakkl",
+    "description": "dart-chrome-app - dev version",
+    "oauth2-clientid": "677650151232-a70egrb662o99n4335ed8n76u5u40ul3.apps.googleusercontent.com"
+  },
   "stable": {
     "name": "dart-chrome-app (developer preview)",
     "branch": "0.17",
