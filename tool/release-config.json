@@ -2,32 +2,12 @@
   "nightly": {
     "name": "dart-chrome-app (nightly)",
     "branch": "master",
-    "version": "0.18",
-    "id": "kcjgcakhgelcejampmijgkjkadfcncjl",
-    "description": "dart-chrome-app - nightly version",
-    "oauth2-clientid": "450494089748-gp35cruaj31fchdh2423raf015luc82u.apps.googleusercontent.com"
-  },
-  "dev": {
-    "name": "dart-chrome-app (dev)",
-    "branch": "0.18",
-    "version": "0.18",
-    "id": "hpenkfongmodpaiknffeeeohcoilclii",
-    "description": "dart-chrome-app - dev version",
-    "oauth2-clientid": "450494089748-v53iih45odoooegmomoij2do6eeok65m.apps.googleusercontent.com"
-  },
-  "wercker-deploy": {
-    "name": "dart-chrome-app (dev)",
-    "branch": "wercker-deploy",
-    "version": "0.0.1",
     "id": "igpiamleninpnffljjnjihmjmmmcakkl",
-    "description": "dart-chrome-app - dev version",
-    "oauth2-clientid": "677650151232-a70egrb662o99n4335ed8n76u5u40ul3.apps.googleusercontent.com"
+    "description": "dart-chrome-app - nightly version"
   },
   "stable": {
-    "name": "dart-chrome-app (developer preview)",
-    "branch": "0.17",
-    "version": "0.17",
-    "id": "pnoffddplpippgcfjdhbmhkofpnaalpg",
-    "oauth2-clientid": "450494089748-t8dpd0irtkfhh76g5dq54gjnut5ipggp.apps.googleusercontent.com"
+    "name": "dart-chrome-app (stable)",
+    "branch": "stable",
+    "id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
   }
 }

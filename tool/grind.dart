@@ -104,9 +104,7 @@ void lint(GrinderContext context) {
 
     _verify('name');
     _verify('branch');
-    _verify('version');
     _verify('id');
-    _verify('oauth2-clientid');
 
     String branch = config['branch'];
     if (branchNames.contains(branch)) {
