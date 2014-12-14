@@ -1,0 +1,3 @@
+[submodule "submodule/chromedeveditor"]
+	path = submodule/chromedeveditor
+	url = https://github.com/dart-lang/chromedeveditor.git

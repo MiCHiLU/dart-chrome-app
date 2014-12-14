@@ -1,0 +1,13 @@
+{
+  "nightly": {
+    "name": "dart-chrome-app (nightly)",
+    "branch": "master",
+    "id": "igpiamleninpnffljjnjihmjmmmcakkl",
+    "description": "dart-chrome-app - nightly version"
+  },
+  "stable": {
+    "name": "dart-chrome-app (stable)",
+    "branch": "stable",
+    "id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  }
+}
