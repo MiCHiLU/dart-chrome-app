@@ -17,10 +17,10 @@ int count = 0;
 void main() {
   polymer.initPolymer().run(() {
     polymer.Polymer.onReady.then((_) {
-      applicationFactory()
+      //applicationFactory()
       //.addModule(new AppModule())
-      .run()
-      ;
+      //.run()
+      //;
     });
     querySelector('#text_id').onClick.listen(resizeWindow);
   });
