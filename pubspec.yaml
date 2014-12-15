@@ -2,10 +2,7 @@ name: dart-chrome-app
 description: A sample Dart Chrome packaged application
 dependencies:
   chrome: '>=0.6.1 <0.7.0'
-  paper:
-    git:
-      url: https://github.com/dart-lang/chromedeveditor.git
-  polymer: '>=0.15.1 <0.16.0'
+  polymer: '>=0.15.1 <0.15.2'
 dev_dependencies:
   archive: '>=1.0.16 <1.1.0'
   chrome_testing: '>=0.1.0 <0.2.0'
@@ -13,10 +10,8 @@ dev_dependencies:
   intl: any
   path: any
   unittest: '>=0.11.0 <0.12.0'
-dependency_overrides:
-  paper:
-    path: submodule/chromedeveditor/paper
 transformers:
 - polymer:
-    entry_points: web/index.html
     csp: true
+    entry_points:
+    - web/index.html
