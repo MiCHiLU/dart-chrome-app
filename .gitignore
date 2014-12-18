@@ -9,7 +9,5 @@ tags
 syntax: glob
 
 *.dart.js
-*.sw?
-*~
 
 syntax: regexp
