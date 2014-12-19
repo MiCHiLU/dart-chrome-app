@@ -65,14 +65,26 @@ DART_JS=web/main.dart.js
 chrome-apps: $(VERSION) $(ENDPOINTS_LIB) $(RESOURCE)
 
 
+REPOSITORY=$(shell git remote -v|grep origin|grep fetch|awk '{print $$2}')
+NAME=$(basename $(notdir $(REPOSITORY)))
 scaffold:
-	@read -p "your project name([a-z0-9-]): " name &&\
+	@if [ "$(REPOSITORY)" != "" ] ; then\
+		sed -i "" s%git@github.com:MiCHiLU/dart-chrome-app.git%$(REPOSITORY)%g\
+			tool/grind.dart\
+		;\
+	fi;\
+	read -p "your project name([a-z0-9-]), default '$(NAME)': " name &&\
+	if [ "$$name" == "" ] ; then\
+		name="$(NAME)";\
+	fi;\
 	if [ "$$name" == "" ] ; then\
 		echo no given.;\
 		exit;\
 	fi;\
 	sed -i "" s/dart-chrome-app/$$name/g\
 		pubspec.yaml\
+		tool/grind.dart\
+		tool/release-config.json\
 		web/index.html\
 		web/manifest.json\
 	;
