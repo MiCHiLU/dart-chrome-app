@@ -21,7 +21,7 @@ all: chrome-apps
 
 AUTO_VERSOINING=yes
 ENDPOINTS_LIB=submodule/dart_echo_v1_api_client
-RESOURCE_DIR_PATH=web lib
+RESOURCE_DIR_PATH=web
 RESOURCE_DIR=$(foreach dir,$(shell find $(RESOURCE_DIR_PATH) -type d),$(dir))
 HAML=$(foreach dir,$(RESOURCE_DIR),$(wildcard $(dir)/*.haml))
 HTML=$(HAML:.haml=.html)
@@ -31,7 +31,7 @@ MINCSS=$(SASS:.sass=.min.css)
 YAML=$(shell find web -type f -name "[^.]*.yaml")
 JSON=$(YAML:.yaml=.json)
 RESOURCE=$(HTML) $(CSS) $(MINCSS) $(JSON)
-VERSION=lib/version
+VERSION=web/version
 
 pubserve: $(VERSION) $(ENDPOINTS_LIB) $(RESOURCE)
 	pub serve --port 8080 --no-dart2js
@@ -46,13 +46,10 @@ $(ENDPOINTS_LIB):
 		submodule/discovery_api_dart_client_generator/bin/generate.dart --no-prefix -i $(DISCOVERY) -o submodule;\
 	fi;
 
-lib:
-	mkdir -p lib
-
 VERSION_DATE=$(shell git log --max-count=1 --pretty=tformat:%ad --date=short|sed s/-0/-/g|sed s/-/./g)
 VERSION_NUMBER=$(shell git log --oneline --no-merges|wc -l|tr -d " ")
 VERSION_STRING=$(shell git describe --always --dirty=+)
-$(VERSION): lib web/manifest.json
+$(VERSION): web/manifest.json
 ifdef AUTO_VERSOINING
 	@if [ "$(VERSION_STRING)" != "$(strip $(shell [ -f $@ ] && cat $@))" ] ; then\
 		echo 'echo $(VERSION_STRING) > $@' ;\
@@ -68,14 +65,26 @@ DART_JS=web/main.dart.js
 chrome-apps: $(VERSION) $(ENDPOINTS_LIB) $(RESOURCE)
 
 
+REPOSITORY=$(shell git remote -v|grep origin|grep fetch|awk '{print $$2}')
+NAME=$(basename $(notdir $(REPOSITORY)))
 scaffold:
-	@read -p "your project name([a-z0-9-]): " name &&\
+	@if [ "$(REPOSITORY)" != "" ] ; then\
+		sed -i "" s%git@github.com:MiCHiLU/dart-chrome-app.git%$(REPOSITORY)%g\
+			tool/grind.dart\
+		;\
+	fi;\
+	read -p "your project name([a-z0-9-]), default '$(NAME)': " name &&\
+	if [ "$$name" == "" ] ; then\
+		name="$(NAME)";\
+	fi;\
 	if [ "$$name" == "" ] ; then\
 		echo no given.;\
 		exit;\
 	fi;\
 	sed -i "" s/dart-chrome-app/$$name/g\
 		pubspec.yaml\
+		tool/grind.dart\
+		tool/release-config.json\
 		web/index.html\
 		web/manifest.json\
 	;
